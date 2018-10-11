@@ -16,7 +16,17 @@ public class UserVo {
 	private String email;
 	private String tel;
 	private String profile;
+	private int Rnum;
 	
+	
+	public int getRnum() {
+		return Rnum;
+	}
+
+	public void setRnum(int rnum) {
+		Rnum = rnum;
+	}
+
 	public UserVo() {
 		
 	}

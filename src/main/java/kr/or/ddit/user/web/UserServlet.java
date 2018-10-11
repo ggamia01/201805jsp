@@ -2,6 +2,7 @@ package kr.or.ddit.user.web;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jdk.nashorn.internal.runtime.RewriteException;
+import kr.or.ddit.user.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.service.UserService;
 import kr.or.ddit.user.service.UserServiceInf;
@@ -17,12 +20,96 @@ import kr.or.ddit.user.service.UserServiceInf;
 /**
  * Servlet implementation class UserServlet
  */
-@WebServlet("/userAllList")
+@WebServlet(urlPatterns = {"/userAllList","/userPageList","/userDetail"})
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//요청 uri로 로직분기
+				//uri == userAllList
+				String uri = request.getRequestURI();
+				System.out.println("userServlet doGet" + uri);
+				
+				//사용자 전체 조회
+				if(uri.equals("/userAllList")){
+					userAllList(request, response);
+					//사용자 페이징 조회
+				}else if(uri.equals("/userPageList")){
+					userPageList(request,response);
+				}else if(uri.equals("/userDetail")){
+					userDetail(request,response);
+				}
+				
+				
+				
+	}
+	
+	 /** 
+	 * Method : userDetail
+	 * 작성자 : ASUS
+	 * 변경이력 : 
+	 * @param request
+	 * @param response 
+	 * Method 설명 : 
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void userDetail(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		//사용자 아이디가 파라미터로 넘어옴
+		String userId = request.getParameter("userId");
+		//사용자아이디에 해당하는 사용자 정보 조회
+		UserServiceInf userService = new UserService();
+		UserVo userVo = userService.selectUser(userId);
+		
+		//jsp로 위임하기 이해 사용자 정보를 request에 저장
+		request.setAttribute("userVo", userVo);
+		//사용자 상세 화면으로 위임
+		RequestDispatcher rd = request.getRequestDispatcher("/user/userDetail.jsp");
+		rd.forward(request, response);
+	}
+
+	/** 
+	 * Method : userPageList
+	 * 작성자 : ASUS
+	 * 변경이력 : 
+	 * @param request
+	 * @param response 
+	 * Method 설명 : 사용자 페이지 리스트 조회
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void userPageList(HttpServletRequest request ,
+	         HttpServletResponse response) throws ServletException, IOException{
+	      System.out.println("userPageList");
+	      
+	      //userservice 생성
+	      UserServiceInf userService = new UserService();
+	      //userPageList 호출 : 메소드 인자 - pageVo : page, pageSize
+	      PageVo pageVo = new PageVo();
+	      pageVo.setPage(Integer.parseInt((request.getParameter("page"))));
+	      pageVo.setPageSize(Integer.parseInt((request.getParameter("pageSize"))));
+	      
+	      //페이지 리스트
+	      Map<String, Object> resultMap = userService.selectUserPageList(pageVo);
+	      List<UserVo> pageList = (List<UserVo>) resultMap.get("userList");
+	      
+	      //페이지 건수
+	      int pageCnt = (int) resultMap.get("pageCnt");
+	      
+	      //request 객체에 저장
+	      request.setAttribute("pageList", pageList);
+	      request.setAttribute("pageCnt", pageCnt);
+	      
+	      //forward (userAllList.jsp --> userPagingList.jsp)
+	      RequestDispatcher rd = request.getRequestDispatcher("/user/userPagingList.jsp");
+			rd.forward(request, response);
+	   }
+
+
+	private void userAllList(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		//전체 사용자 정보조회
 		UserServiceInf userService = new UserService();
 		List<UserVo> userList = userService.getJspUser();

@@ -3,7 +3,10 @@ package kr.or.ddit.user.service;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Map;
 
+import kr.or.ddit.user.dao.UserDao;
+import kr.or.ddit.user.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
 
 import org.junit.After;
@@ -60,7 +63,7 @@ public class UserServiceTest {
 		 List<UserVo> userList =  userService.getJspUser();
 		
 		/***Then***/
-		 assertEquals(5, userList.size());
+		 assertEquals(105, userList.size());
 	}
 	
 	@Test
@@ -103,5 +106,28 @@ public class UserServiceTest {
 		assertEquals("brown", userVo1.getUserId());
 		assertEquals("브라운", userVo1.getName());
 	}
+	
+	@Test
+	public void selectUserPageListTest() {
+		/***Given : 주어진 상황***/
+	
+		PageVo pageVo = new PageVo();
+		pageVo.setPage(1);
+		pageVo.setPageSize(10);
+
+		/***When : 어떤 동작 수행(메소드 호출)***/
+		Map<String, Object> resultMap = userService.selectUserPageList(pageVo);
+		List<UserVo> userList = (List<UserVo>) resultMap.get("userList");
+				
+		int pageCnt = (Integer)resultMap.get("pageCnt");
+		
+		
+		
+		/***Then : 결과가 어떠해야하는지 정의***/
+		assertEquals(10, userList.size());
+		assertEquals(11, pageCnt);
+		
+	}
+
 
 }
