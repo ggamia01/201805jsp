@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +40,31 @@ public class LoginServlet extends HttpServlet{
 		//1
 		String userId=req.getParameter("userId");
 		String password=req.getParameter("password");
+		//remember-me 파라미터 받아서 sysout으로 출력
+		String remember_me = req.getParameter("remember-me");
+		System.out.println("remember-me:"+remember_me);
+		
+		//remember_me == null : 아이디 기억 사용 안함
+		if(remember_me == null){
+			Cookie[] cookies = req.getCookies();
+			for(Cookie cookie : cookies){
+				//cookie 이름이 rememer, userId 일 경우 maxage를 -1설정하여 쿠키를 유효하지 않도록 설정
+				System.out.println(cookie.getName());
+				if(cookie.getName().equals("remember")||cookie.getName().equals("userId")){
+					cookie.setMaxAge(0);
+					resp.addCookie(cookie);
+				}
+			}
+		//remember_me != null : 아이디 기억 사용 
+		}else{
+			//respons 객체에 쿠키를 저장
+			Cookie cookie = new Cookie("remember", "Y");
+			Cookie userIdCookie = new Cookie("userId",userId);
+			//cookie.setMaxAge(60*60*24); //하루동안 적용
+			resp.addCookie(cookie);
+			resp.addCookie(userIdCookie);
+			
+		}
 		
 		//2 --> db대신 상수로 대체 --> db로 대체
 		// 1.사용자가 전송한 userId파라미터로 사용자 정보조회

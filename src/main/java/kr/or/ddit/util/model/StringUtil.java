@@ -21,4 +21,17 @@ public class StringUtil {
 		
 		return fileName;
 	}
+
+	public static String getCookie(String cookieString, String string) {
+		
+		String getCookieValue = "";
+		String[] splits = cookieString.split("; ");
+		for(String str : splits){
+			if(str.startsWith(string +"=")){
+				getCookieValue = str.substring((string + "=").length());
+			}
+		}
+		
+		return getCookieValue;
+	}
 }

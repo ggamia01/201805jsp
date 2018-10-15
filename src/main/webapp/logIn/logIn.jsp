@@ -15,17 +15,50 @@
 	
     <title>Signin Template for Bootstrap</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap-3.3.2-dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="../css/signin.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <%@include file="/common/basicLib.jsp" %>
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	console.log("test");
+    	//remember 쿠기값이 Y이면
+    	if(getCookie("remember")=="Y"){
+    	//remember-me 체크박스 체크
+//     		$("#check").prop("checked", true); // javascript의 프로퍼티 : true
+    		$("#check").attr("checked", true); // html 속성 : checked
+
+    	//userId input value를 userId 쿠키 값으로 설정
+    		$("#inputEmail").val(getCookie("userId"));
+    	}
+    });
+    	function getCookie(cookieName){
+    		//cookieString --> document.cookie
+    		var cookies = document.cookie.split("; ");
+    		var getCookieValue = "";
+    		for(var i=0;i<cookies.length;i++){
+    			var str = cookies[i];
+    			if(str.startsWith(cookieName +"=")){
+    				CookieValue = str.substring((cookieName + "=").length);
+    			}
+    		}
+//     		for(var i in cookies){
+//     			if(str.startsWith(string +"=")){
+//     				getCookieValue = str.substring((string + "=").length);
+//     			}
+//     		}
+    		
+    		return CookieValue;
+    	}
+    	
+		//getCookie("userId")); 
+    	//getCookie("remember")
+    </script>
 </head>
 <!-- 로그인 처리
 logIn.jsp(사용자 아이디, 비밀번호를 입력)
@@ -56,14 +89,14 @@ logInProcess.jsp
 			<label for="inputEmail" class="sr-only">userId</label> 
 				<input
 					type="text" id="inputEmail" class="form-control"
-					placeholder="userId" required autofocus name="userId" value="brown"> 
+					placeholder="userId" required autofocus name="userId" > 
 			<label
 					for="inputPassword" class="sr-only">Password</label> 
 				<input
 				type="password" id="inputPassword" class="form-control"
 				placeholder="Password" required name="password" value="brownpass">
 			<div class="checkbox">
-				<label> <input type="checkbox" value="remember-me">
+				<label> <input id="check" name ="remember-me" type="checkbox" value="remember-me" >
 					Remember me
 				</label>
 			</div>
