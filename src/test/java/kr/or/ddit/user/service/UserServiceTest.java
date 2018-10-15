@@ -2,12 +2,15 @@ package kr.or.ddit.user.service;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.user.dao.UserDao;
-import kr.or.ddit.user.model.PageVo;
+import kr.or.ddit.user.dao.UserDaoInf;
 import kr.or.ddit.user.model.UserVo;
+import kr.or.ddit.util.model.PageVo;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -30,6 +33,7 @@ public class UserServiceTest {
 	//before - selectUser(String) -> after 
 	//before - selectUser(UserVo) -> after 
 	//afterClass
+	private final String TEST_USER_ID ="songTest";
 	
 	private UserServiceInf userService ;
 	
@@ -46,6 +50,7 @@ public class UserServiceTest {
 	public void before(){
 		System.out.println("before");
 		userService = new UserService();
+		userService.deleteUser(TEST_USER_ID);
 	}
 	
 	@After
@@ -129,5 +134,27 @@ public class UserServiceTest {
 		
 	}
 
+	@Test
+	public void insertUserTest(){
+		/***Given***/
+		//userVo준비
+				UserVo userVo = new UserVo();
+				userVo.setUserId(TEST_USER_ID);
+				userVo.setName("브라운");
+				userVo.setPass("pass1234");
+				userVo.setAddr1("대전시");
+				userVo.setAddr2("상세주소");
+				userVo.setZipcd("34940");
+				GregorianCalendar gc = new GregorianCalendar(2018,7,8);
+				userVo.setBirth(new Date(gc.getTimeInMillis()));
+				userVo.setEmail("newUser@gamil.com");
+				userVo.setTel("123123");
+
+		/***When***/
+		userService.insertUser(userVo);
+
+		/***Then***/
+
+	}
 
 }

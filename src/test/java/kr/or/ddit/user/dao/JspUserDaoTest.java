@@ -2,10 +2,12 @@ package kr.or.ddit.user.dao;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
-import kr.or.ddit.user.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
+import kr.or.ddit.util.model.PageVo;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,10 +15,12 @@ import org.junit.Test;
 public class JspUserDaoTest {
 
 	private UserDaoInf jspDao ;
+	private final String TEST_USER_ID ="songTest";
 	
 	@Before
 	public void setUp(){
 		jspDao = new UserDao();
+		jspDao.deleteUser(TEST_USER_ID);
 	}
 	//테스트 메소드명명 규칙(회사 마다 다름)
 	//운영코드 메소드 이름 +  Test
@@ -100,12 +104,6 @@ public class JspUserDaoTest {
 		
 	}
 
-	/** 
-	 * Method : getUserCntTest
-	 * 작성자 : ASUS
-	 * 변경이력 :  
-	 * Method 설명 : 사용자 전체 건수 조회 테스트
-	 */
 	@Test
 	public void getUserCntTest(){
 		/***Given***/
@@ -117,4 +115,44 @@ public class JspUserDaoTest {
 		/***Then***/
 		assertEquals(105, totalUserCnt);
 	}
+	
+	@Test
+	public void insertUserTest(){
+		/***Given***/
+		//userVo준비
+		UserVo userVo = new UserVo();
+		userVo.setUserId(TEST_USER_ID);
+		userVo.setName("브라운");
+		userVo.setPass("pass1234");
+		userVo.setAddr1("대전시");
+		userVo.setAddr2("상세주소");
+		userVo.setZipcd("34940");
+		GregorianCalendar gc = new GregorianCalendar(2018,7,8);
+		userVo.setBirth(new Date(gc.getTimeInMillis()));
+		userVo.setEmail("newUser@gamil.com");
+		userVo.setTel("123123");
+		
+
+		/***When***/
+		//userDao.inserUser()
+		int userVoCnt = jspDao.insertUser(userVo);
+				
+		/***Then***/
+		//입력건수 비교
+		assertEquals(1, userVoCnt);
+	}
+	
+//	@Test
+//	public void deleteUserTest(){
+//		/***Given***/
+//		UserVo userVo = new UserVo();
+//		userVo.setUserId("songTest");
+//		String userId = userVo.getUserId();
+//
+//		/***When***/
+//		int deleteCnt = jspDao.deleteUser(userId);
+//
+//		/***Then***/
+//		assertEquals(1, deleteCnt);
+//	}
 }

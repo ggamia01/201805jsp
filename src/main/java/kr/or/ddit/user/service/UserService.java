@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.user.dao.UserDao;
-import kr.or.ddit.user.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
+import kr.or.ddit.util.model.PageVo;
 
 public class UserService implements UserServiceInf {
 
@@ -55,6 +55,48 @@ public class UserService implements UserServiceInf {
 		resultMap.put("userList", userList);
 		resultMap.put("pageCnt", (int)Math.ceil((double)totalUserCnt/pageVo.getPageSize()));
 		return resultMap;
+	}
+	
+	/** 
+	 * Method : insertUser
+	 * 작성자 : ASUS
+	 * 변경이력 : 
+	 * @param userVo
+	 * @return 
+	 * Method 설명 : 사용자 등록
+	 */
+	@Override
+	public int insertUser(UserVo userVo) {
+		// TODO Auto-generated method stub
+		return userDao.insertUser(userVo);
+	}
+
+	/** 
+	 * Method : deleteUser
+	 * 작성자 : ASUS
+	 * 변경이력 : 
+	 * @param userId
+	 * @return 
+	 * Method 설명 : 사용자 삭제
+	 */
+	@Override
+	public int deleteUser(String userId) {
+		// TODO Auto-generated method stub
+		return userDao.deleteUser(userId);
+	}
+
+	/** 
+	 * Method : updatdUser
+	 * 작성자 : ASUS
+	 * 변경이력 : 
+	 * @param userId
+	 * @return 
+	 * Method 설명 : 사용자 상세 정보 수정
+	 */
+	@Override
+	public int updateUser(UserVo userVo) {
+		// TODO Auto-generated method stub
+		return userDao.updateUser(userVo);
 	}
 
 
