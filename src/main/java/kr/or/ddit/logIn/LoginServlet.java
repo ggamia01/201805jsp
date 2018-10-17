@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet{
 		//3-1
 		if(selectUser !=null && selectUser.getPass().equals(password)){
 			
-			req.getSession().setAttribute("userVo", selectUser);;
+			req.getSession().setAttribute("S_user", selectUser);;
 			
 			
 			//dispatch

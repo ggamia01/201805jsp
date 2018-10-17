@@ -5,7 +5,7 @@
 <%@page import="kr.or.ddit.user.model.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,17 +69,27 @@
 				<!-- userList loop 이용하여 출력 -->
 				
 				
-				<% List<UserVo> userList = (List)request.getAttribute("pageList");
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-					for(int i=0;i<userList.size();i++){ 
-						UserVo userVo2 = userList.get(i); %>
-				<tr class="userClick">
-					<td><%=userVo2.getRnum() %></td>
-					<td><%=userVo2.getUserId() %></td>
-					<td><%=userVo2.getName() %></td>
-					<td><%=sdf.format(userVo2.getBirth()) %></td>
-				</tr>
-				<%} %>
+<%-- 				<% List<UserVo> userList = (List)request.getAttribute("pageList"); --%>
+<!-- // 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일"); -->
+<!-- // 					for(int i=0;i<userList.size();i++){  -->
+<%-- 						UserVo userVo2 = userList.get(i); %> --%>
+<!-- 				<tr class="userClick"> -->
+<%-- 					<td><%=userVo2.getRnum() %></td> --%>
+<%-- 					<td><%=userVo2.getUserId() %></td> --%>
+<%-- 					<td><%=userVo2.getName() %></td> --%>
+<%-- 					<td><%=sdf.format(userVo2.getBirth()) %></td> --%>
+<!-- 				</tr> -->
+<%-- 				<%} %> --%>
+				<c:forEach items="${pageList }" var="vo" >
+					<tr class="userClick">
+						<td>${vo.rnum }</td>
+						<td>${vo.userId }</td>
+						<td>${vo.name }</td>
+						<td><fmt:formatDate value = "${vo.birth }" pattern="yyyy년 MM월 dd일"></fmt:formatDate></td>
+					</tr>
+					
+				</c:forEach>
+				
 			</table>
 		</div>
 
@@ -87,18 +97,34 @@
 
 		<div class="text-center">
 			<ul class="pagination">
+<!-- 				 <li> -->
+<!--       				<a href="/userPageList?page=1&pageSize=10" aria-label="Previous"> -->
+<!--         				<span aria-hidden="true">&laquo;</span> -->
+<!--       				</a> -->
+<!--    				 </li> -->
+<%-- 				<% int pageCnt = (Integer)request.getAttribute("pageCnt");  --%>
+<!-- // 					for(int p =1; p<=pageCnt; p++){ -->
+<%-- 				%> --%>
+<%-- 				<li><a href="/userPageList?page=<%=p %>&pageSize=10"><%=p %></a></li> --%>
+<%-- 				<%} %> --%>
+<!-- 				<li> -->
+<%--       				<a href="/userPageList?page=<%=pageCnt %>&pageSize=10" aria-label="Next"> --%>
+<!--        					 <span aria-hidden="true">&raquo;</span> -->
+<!--      				 </a> -->
+<!--     			</li> -->
 				 <li>
       				<a href="/userPageList?page=1&pageSize=10" aria-label="Previous">
         				<span aria-hidden="true">&laquo;</span>
       				</a>
    				 </li>
-				<% int pageCnt = (Integer)request.getAttribute("pageCnt"); 
-					for(int p =1; p<=pageCnt; p++){
-				%>
-				<li><a href="/userPageList?page=<%=p %>&pageSize=10"><%=p %></a></li>
-				<%} %>
+				<c:set var="pageCnt" value="${pageCnt }"/>
+				<c:forEach begin="1" end="${pageCnt }" var="p">
+				
+					<li><a href="/userPageList?page=${p }&pageSize=10">${p }</a></li>
+				</c:forEach>
+<%-- 				<%} %> --%>
 				<li>
-      				<a href="/userPageList?page=<%=pageCnt %>&pageSize=10" aria-label="Next">
+      				<a href="/userPageList?page=${pageCnt }&pageSize=10" aria-label="Next">
        					 <span aria-hidden="true">&raquo;</span>
      				 </a>
     			</li>

@@ -5,7 +5,8 @@
 <%@page import="kr.or.ddit.user.model.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,11 +78,20 @@
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
 						<div class="col-sm-10">
-							<% String profilePath = userVo1.getProfile();
-								profilePath = profilePath ==null ? "profile/noimage.png" : profilePath;
-							%>
-							<img src="<%=profilePath %>"/>
-							<input type="file" name="profile" value="<%=profilePath %>"/>
+<%-- 							<% String profilePath = userVo1.getProfile(); --%>
+<!-- // 								profilePath = profilePath ==null ? "profile/noimage.png" : profilePath; -->
+<%-- 							%> --%>
+							<c:set var="profilePath" value="${userVo.profile }"/>
+							<c:choose>
+								<c:when test="${profilePath !=null }">
+									<c:set var="profile" value="${profilePath }"/>
+								</c:when>
+								<c:otherwise>
+									<c:set var="profile" value="profile/noimage.png" />
+								</c:otherwise>
+							</c:choose>
+							<img src="${profile }"/>
+							<input type="file" name="profile" value="${profile }"/>
 						</div>
 					</div>
 					
@@ -89,7 +99,7 @@
 						<label for="userNm" class="col-sm-2 control-label">사용자 아이디</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="userId" 
-								name="userId" readonly value="<%=userVo1.getUserId() %>">
+								name="userId" readonly value="${uservo.userId }">
 						</div>
 					</div>
 
@@ -97,7 +107,7 @@
 						<label for="userNm" class="col-sm-2 control-label">비밀번호</label>
 						<div class="col-sm-10">
 							<input type="password" class="form-control" id="pass" 
-								name="pass" value="<%=userVo1.getPass() %>">
+								name="pass" value="${userVo.pass }">
 						</div>
 					</div>
 					
@@ -105,7 +115,7 @@
 						<label for="userNm" class="col-sm-2 control-label">이름</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="name" 
-								name="name" readonly value="<%=userVo1.getName() %>">
+								name="name" readonly value="${userVo.name }">
 						</div>
 					</div>
 
@@ -114,7 +124,7 @@
 						<label for="userNm" class="col-sm-2 control-label">주소</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="addr1" 
-								name="addr1" readonly value="<%=userVo1.getAddr1() %>"><!-- 주소 검색 버튼 -->
+								name="addr1" readonly value="${userVo.addr1 }"><!-- 주소 검색 버튼 -->
 							<button type="button" id="addrSearchBtn" class="btn btn-default">주소검색</button>
 						</div>
 					</div>
@@ -123,14 +133,14 @@
 						<label for="userNm" class="col-sm-2 control-label">상세주소</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="addr2" 
-								name="addr2"  value="<%=userVo1.getAddr2()%>">
+								name="addr2"  value="${userVo.addr2 }">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">우편번호</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="zipcd" 
-								name="zipcd" readonly value="<%=userVo1.getZipcd() %>">
+								name="zipcd" readonly value="${userVo.zipcd }">
 						</div>
 					</div>
 					
@@ -138,21 +148,21 @@
 						<label for="userNm" class="col-sm-2 control-label">생년월일</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="birth" 
-								name="birth" value="<%=sdf.format(userVo1.getBirth()) %>">
+								name="birth" <fmt:formatDate value = "${userVo.birth }" pattern="yyyy년 MM월 dd일"></fmt:formatDate>/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">이메일</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="email" 
-								name="email" value="<%=userVo1.getEmail() %>">
+								name="email" value="${userVo.email }">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">연락처</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="tel" 
-								name="tel" value="<%=userVo1.getTel() %>">
+								name="tel" value="${userVo.tel }">
 						</div>
 					</div>
 					<div class="form-group">
