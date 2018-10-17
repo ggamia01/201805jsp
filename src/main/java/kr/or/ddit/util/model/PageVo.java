@@ -3,6 +3,7 @@ package kr.or.ddit.util.model;
 public class PageVo {
 	private int page;
 	private int pageSize;
+	
 	public int getPage() {
 		return page;
 	}

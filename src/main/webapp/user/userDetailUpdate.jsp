@@ -148,7 +148,7 @@
 						<label for="userNm" class="col-sm-2 control-label">생년월일</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="birth" 
-								name="birth" <fmt:formatDate value = "${userVo.birth }" pattern="yyyy년 MM월 dd일"></fmt:formatDate>/>
+								name="birth" value="<fmt:formatDate value = "${userVo.birth }" pattern="yyyy년 MM월 dd일"></fmt:formatDate>"/>
 						</div>
 					</div>
 					<div class="form-group">
