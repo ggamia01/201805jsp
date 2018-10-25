@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%-- <% UserVo userVo = (UserVo)session.getAttribute("userVo"); %> --%>
 <!-- 	main.jsp -->
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -21,7 +22,11 @@
 <%-- 				<%}%> --%>
 				<c:choose>
 					<c:when test="${S_user != null }">
-						${S_user.name } 님안녕하세요
+						<fmt:bundle basename="kr.or.ddit.resource.msg.msg">
+							<fmt:message key="visitor">
+								<fmt:param value="${S_user.name }"></fmt:param>
+							</fmt:message>
+						</fmt:bundle>
 					</c:when>
 					<c:otherwise>
 						로그인해주세요
