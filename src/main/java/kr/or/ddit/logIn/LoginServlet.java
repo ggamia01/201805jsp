@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.ddit.encrypt.sha.KISA_SHA256;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.service.UserService;
 import kr.or.ddit.user.service.UserServiceInf;
@@ -75,7 +76,10 @@ public class LoginServlet extends HttpServlet{
 		// 3.session에 사용자 정보등록(as-is : 임의의 userVo 등록 / to-be : db에서 조회한 userVo)
 		
 		//3-1
-		if(selectUser !=null && selectUser.getPass().equals(password)){
+//		if(selectUser !=null && selectUser.getPass().equals(password)){
+		String encryptPass = KISA_SHA256.encrypt(password);
+//		if(selectUser !=null && selectUser.getPass().equals(encryptPass)){
+		if(selectUser !=null && selectUser.authPass(encryptPass)){
 			
 			req.getSession().setAttribute("S_user", selectUser);;
 			

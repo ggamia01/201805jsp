@@ -127,6 +127,19 @@ public class UserVo {
 				+ email + ", tel=" + tel + ", profile=" + profile + "]";
 	}
 
+	/** 
+	 * Method : authPass
+	 * 작성자 : ASUS
+	 * 변경이력 : 
+	 * @param encryptPass
+	 * @return 
+	 * Method 설명 : 비밀번호 검증
+	 */
+	public boolean authPass(String encryptPass) {
+		// TODO Auto-generated method stub
+		return getPass().equals(encryptPass);
+	}
+
 
 	
 	
