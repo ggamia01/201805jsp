@@ -13,8 +13,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.catalina.core.ApplicationContext;
-
 public class RequestCounterFilter implements Filter{
 	
 //	static public Map<String, Integer> RC_Map = new HashMap<String, Integer>();
