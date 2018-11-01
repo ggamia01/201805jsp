@@ -99,7 +99,7 @@ public class UserServlet extends HttpServlet {
 		//사용자아이디에 해당하는 사용자 정보 조회
 		UserServiceInf userService = new UserService();
 		UserVo userVo = userService.selectUser(userId);
-		
+		System.out.println("userservlet vo : "+userVo);
 		
 		//jsp로 위임하기 이해 사용자 정보를 request에 저장
 		request.setAttribute("userVo", userVo);

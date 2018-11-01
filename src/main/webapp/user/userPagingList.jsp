@@ -31,7 +31,7 @@
 		//tr에 select (class="userClick")
 		var click ="click";
 		$(".userClick").on(click,function(){
-			var userId = $(this).children()[1].innerText;
+			var userId = $(this).children()[1].innerHTML;
 			
 			$("#userId").val(userId);
 			// .submit();

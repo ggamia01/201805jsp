@@ -57,18 +57,4 @@
     <exception-type>java.lang.ArithmeticException</exception-type>
     <location>/error/type/arithmetic.jsp</location>
   </error-page>
-<!--   <filter> -->
-<!--     <filter-name>parameterFilter</filter-name> -->
-<!--     <filter-class>kr.or.ddit.filter.ParameterFilter</filter-class> -->
-<!--   </filter> -->
-<!--   <filter-mapping> -->
-<!--     <filter-name>parameterFilter</filter-name> -->
-<!--     <url-pattern>/*</url-pattern> -->
-<!--   </filter-mapping> -->
-<!--   <listener> -->
-<!--     <listener-class>kr.or.ddit.listener.SessionListener</listener-class> -->
-<!--   </listener> -->
-<!--   <listener> -->
-<!--     <listener-class>kr.or.ddit.listener.SessionAttrListener</listener-class> -->
-<!--   </listener> -->
 </web-app>

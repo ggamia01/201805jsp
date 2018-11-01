@@ -48,7 +48,6 @@
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<form id="frm" class="form-horizontal" role="form" action="/userDetailUpdate?userId=<%=userVo1.getUserId() %>" method="get">
 				
-				
 					
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 사진</label>
@@ -60,12 +59,15 @@
 							<c:choose> 
 								<c:when test="${userVo.profile == null }">
 									<c:set var="profile" value="profile/noimage.png"/>
+									<img src="${profile}"/> 
 								</c:when>
 								<c:otherwise>
-									<c:set var="profile" value="${profilePath}"/>
+									<c:set var="profile" value="/fileDownload?userId=${userVo.userId }"/>
+									<img src="${profile}"/> 
 								</c:otherwise>	
 							</c:choose>
-							<img src="${profile}"/>
+<%-- 							<img src="${profile}"/> --%>
+<%-- 							<img src="/fileDownload?userId=${userVo.userId }"/> --%>
 <%-- 							<img src="<%=profilePath %>"/> --%>
 							
 						</div>

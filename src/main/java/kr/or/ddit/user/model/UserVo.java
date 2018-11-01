@@ -2,7 +2,10 @@ package kr.or.ddit.user.model;
 
 import java.util.Date;
 
-public class UserVo {
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
+
+public class UserVo implements HttpSessionBindingListener{
 	
 	private String userId;
 	private String name;
@@ -136,8 +139,20 @@ public class UserVo {
 	 * Method 설명 : 비밀번호 검증
 	 */
 	public boolean authPass(String encryptPass) {
-		// TODO Auto-generated method stub
+		
 		return getPass().equals(encryptPass);
+	}
+
+	@Override
+	public void valueBound(HttpSessionBindingEvent event) {
+		System.out.println("userVo : "+event.getName());
+		
+	}
+
+	@Override
+	public void valueUnbound(HttpSessionBindingEvent event) {
+		
+		
 	}
 
 
